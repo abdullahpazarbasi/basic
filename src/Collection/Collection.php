@@ -148,6 +148,17 @@ class Collection implements CollectionInterface
     }
     
     /**
+     * Purify the collection
+     *
+     * @return static
+     */
+    public function purify()
+    {
+        //todo: array_filter
+        return $this;
+    }
+    
+    /**
      * Checks whether an element is contained in the collection.
      * This is an O(n) operation, where n is the size of the collection
      *
@@ -769,6 +780,19 @@ class Collection implements CollectionInterface
         return $this;
     }
     
+    public function unshift()
+    {
+        $iNumberOfArguments = func_num_args();
+        if ($iNumberOfArguments < 2) {
+            return count($this->aElements);
+        }
+        $aArguments = func_get_args();
+        $iNumberOfElementsInArray = 0;
+        for ($i = 1; $i < $iNumberOfArguments; $i++) {
+            // todo:
+        }
+    }
+    
     /**
      * Flatten a multi-dimensional array into a one dimensional array
      *
@@ -797,6 +821,106 @@ class Collection implements CollectionInterface
             }
         });
         return $aFlattened;
+    }
+    
+    public static function arrayify()
+    {
+        // todo:
+    }
+    
+    /**
+     * @param array $a
+     * @param string $sFix
+     * @return mixed
+     */
+    public static function prependEachKey($a, $sFix)
+    {
+        if () { // todo:
+            $aO = [];
+            foreach ($a as $xKey => $xValue) {
+                $aO[$sFix . $xKey] = $xValue;
+            }
+            return $aO;
+        }
+        return $a;
+    }
+    
+    /**
+     * @param array $a
+     * @param string $sFix
+     * @return mixed
+     */
+    public static function appendEachKey($a, $sFix)
+    {
+        if () { // todo:
+            $aO = [];
+            foreach ($a as $xKey => $xValue) {
+                $aO[$xKey . $sFix] = $xValue;
+            }
+            return $aO;
+        }
+        return $a;
+    }
+    
+    /**
+     * @param array $a
+     * @param $sVariableName
+     * @return null|string
+     */
+    protected static function getConstructionPhpCode($a, $sVariableName)
+    {
+        if () { // todo:
+            $sO = '';
+            $sVariable = '$' . $sVariableName;
+            foreach ($a as $xKey => $xValue) {
+                if (is_string($xKey)) {
+                    $xKey = "'" . $xKey . "'";
+                }
+                if (is_array($xValue)) {
+                    $sStack = self::getConstructionPhpCode($xValue, ltrim($sVariable, "$") . '[' . $xKey . ']');
+                    if ($sStack === NULL) {
+                        return NULL;
+                    }
+                    $sO .= $sStack;
+                }
+                elseif (is_scalar($xValue)) {
+                    if (is_string($xValue)) {
+                        $xValue = "'" . str_replace("'", "\\'", $xValue) . "'";
+                    }
+                    $sO .= $sVariable . '[' . $xKey . '] = ' . $xValue . ';' . PHP_EOL;
+                }
+                else {
+                    return NULL;
+                }
+            }
+            return $sO;
+        }
+        return NULL;
+    }
+    
+    protected static function groupBy()
+    {
+        // todo:
+    }
+    
+    protected static function orderBy()
+    {
+        // todo:
+    }
+    
+    protected static function uniqueBy()
+    {
+        // todo:
+    }
+    
+    protected static function filterBy()
+    {
+        // todo:
+    }
+    
+    protected static function mergeBy()
+    {
+        // todo:
     }
     
 }
